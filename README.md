@@ -8,9 +8,6 @@ Laravel 5 Repositories is used to abstract the data layer, making our applicatio
 [![License](https://poser.pugx.org/sevenymedia/sevenymedia/license)](https://packagist.org/packages/sevenymedia/l5-repository)
 [![Code Climate](https://codeclimate.com/github/sevenymedia/l5-repository/badges/gpa.svg)](https://codeclimate.com/github/sevenymedia/l5-repository)
 
-#### See versions: [1.0.*](https://github.com/andersao/l5-repository/tree/1.0.4) / [2.0.*](https://github.com/andersao/l5-repository/tree/2.0.14)
-#### Migrate to: [2.0](migration-to-2.0.md) / [2.1](migration-to-2.1.md)
-
 You want to know a little more about the Repository pattern? [Read this great article](http://bit.ly/1IdmRNS).
 
 ## Table of Contents
