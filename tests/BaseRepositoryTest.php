@@ -124,8 +124,6 @@ class BaseRepositoryTest extends TestCase
         $this->assertNotSame($model, $property->getValue($repository));
     }
 
-
-
     public function providerTestConstructor(): array
     {
         return [
