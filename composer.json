@@ -1,0 +1,42 @@
+{
+  "name": "sevenymedia/l5-repository",
+  "description": "Laravel 5 - Repositories to the database layer",
+  "keywords": ["laravel", "repository", "eloquent", "model", "cache"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Tjebbe Westendorp",
+      "email": "contact@tswestendorp.nl",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "email": "contact@tswestendorp.nl",
+    "issues":"https://github.com/sevenymedia/l5-repository/issues",
+    "source":"https://github.com/sevenymedia/l5-repository"
+  },
+  "autoload": {
+    "psr-4": {
+      "SevenyMedia\\Repository\\": "src/Repository/"
+    }
+  },
+  "config": {
+    "preferred-install": "dist"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Prettus\\Repository\\Providers\\RepositoryServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=7.0",
+    "prettus/l5-repository": "2.6.*"
+  },
+  "require-dev": {
+    "mockery/mockery": "^1.1",
+    "phpunit/phpunit": "^6.5"
+  }
+}
