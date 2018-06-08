@@ -48,9 +48,6 @@
     "cs": [
       "@php ./vendor/bin/phpcs --report-width=140 --standard=./phpcs.xml --runtime-set ignore_warnings_on_exit 1"
     ],
-    "deploy": [
-      "sh ./resources/bin/deploy.sh"
-    ],
     "test": [
       "@php -d zend_extension=xdebug.so ./vendor/bin/phpunit --stop-on-failure"
     ],
