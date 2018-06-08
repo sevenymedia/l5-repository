@@ -1,6 +1,6 @@
 {
   "name": "sevenymedia/l5-repository",
-  "description": "Laravel 5 - Repositories to the database layer",
+  "description": "Laravel 5 - Repositories to the database layer. Extends andersao/l5-repository.",
   "keywords": ["laravel", "repository", "eloquent", "model", "cache"],
   "license": "MIT",
   "authors": [
