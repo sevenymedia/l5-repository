@@ -20,7 +20,10 @@ class BaseRepositoryTest extends TestCase
      */
     protected $model;
 
-    protected $repository;
+    /**
+     * @var \ReflectionClass
+     */
+    protected $repositoryReflector;
 
     public function setUp()
     {
@@ -32,7 +35,7 @@ class BaseRepositoryTest extends TestCase
 
     protected function repositoryReflector(): \ReflectionClass
     {
-        return new \ReflectionClass(RepositoryStub::class);
+        return $this->repositoryReflector ?: $this->repositoryReflector = new \ReflectionClass(RepositoryStub::class);
     }
 
     /**
@@ -48,7 +51,7 @@ class BaseRepositoryTest extends TestCase
             $validator
         ));
 
-        $reflectionClass = new \ReflectionClass(RepositoryStub::class);
+        $reflectionClass = $this->repositoryReflector();
 
         if (null !== $model) {
             $property = $reflectionClass->getProperty('model');
@@ -76,7 +79,7 @@ class BaseRepositoryTest extends TestCase
             new \Illuminate\Support\Collection()
         );
 
-        $reflectionClass = new \ReflectionClass(RepositoryStub::class);
+        $reflectionClass = $this->repositoryReflector();
         $method = $reflectionClass->getMethod('initiateModel');
         $method->setAccessible(true);
         $method->invokeArgs($repository, []);
@@ -95,7 +98,7 @@ class BaseRepositoryTest extends TestCase
             $model = new ModelStub()
         );
 
-        $reflectionClass = new \ReflectionClass(RepositoryStub::class);
+        $reflectionClass = $this->repositoryReflector();
         $method = $reflectionClass->getMethod('initiateModel');
         $method->setAccessible(true);
         $method->invokeArgs($repository, []);
@@ -114,7 +117,7 @@ class BaseRepositoryTest extends TestCase
             $model = new ModelStub()
         ))->resetModel();
 
-        $reflectionClass = new \ReflectionClass(RepositoryStub::class);
+        $reflectionClass = $this->repositoryReflector();
         $property = $reflectionClass->getProperty('model');
         $property->setAccessible(true);
 
