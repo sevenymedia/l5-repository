@@ -89,18 +89,17 @@ class BaseRepositoryTest extends TestCase
         $repository = new RepositoryStub(
             $this->application,
             new \Illuminate\Support\Collection(),
-            $model = new ModelStub()
+            $model = $this->getModelMock()
         );
 
-        $reflectionClass = $this->repositoryReflector();
-        $method = $reflectionClass->getMethod('initiateModel');
-        $method->setAccessible(true);
-        $method->invokeArgs($repository, []);
+        $model->shouldReceive('withCount')->andReturn($builder = \Illuminate\Database\Eloquent\Builder::class);
+        $repository->withCount(null);
 
+        $reflectionClass = $this->repositoryReflector();
         $property = $reflectionClass->getProperty('model');
         $property->setAccessible(true);
 
-        $this->assertSame($model, $property->getValue($repository));
+        $this->assertSame($builder, $property->getValue($repository));
     }
 
     public function testResetModelCreatesNewModel()
@@ -128,7 +127,7 @@ class BaseRepositoryTest extends TestCase
         ];
     }
 
-    public function getModelMock(): \Illuminate\Database\Eloquent\Model
+    public function getModelMock(): \Mockery\MockInterface
     {
         return m::mock(\Illuminate\Database\Eloquent\Model::class);
     }
