@@ -15,8 +15,7 @@ abstract class BaseRepository extends PrettusBaseRepository
 
     protected function initiateModel()
     {
-        $modelClass = $this->model();
-        if (true === $this->model instanceof $modelClass) {
+        if (null !== $this->model) {
             return;
         }
         $this->makeModel();
