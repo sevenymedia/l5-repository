@@ -16,11 +16,6 @@ class BaseRepositoryTest extends TestCase
     protected $application;
 
     /**
-     * @var \Illuminate\Database\Eloquent\Model
-     */
-    protected $model;
-
-    /**
      * @var \ReflectionClass
      */
     protected $repositoryReflector;
@@ -30,7 +25,6 @@ class BaseRepositoryTest extends TestCase
         parent::setUp();
 
         $this->application = new \Illuminate\Container\Container();
-        $this->model = m::mock(\Illuminate\Database\Eloquent\Model::class);
     }
 
     protected function repositoryReflector(): \ReflectionClass
@@ -128,10 +122,15 @@ class BaseRepositoryTest extends TestCase
     {
         return [
             [],
-            [$this->model,],
+            [$this->getModelMock(),],
             [null, 'foo',],
             [null, null, 'foo',],
         ];
+    }
+
+    public function getModelMock(): \Illuminate\Database\Eloquent\Model
+    {
+        return m::mock(\Illuminate\Database\Eloquent\Model::class);
     }
 
 }
