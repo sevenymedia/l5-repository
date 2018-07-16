@@ -127,7 +127,7 @@ class BaseRepositoryTest extends TestCase
         ];
     }
 
-    public function getModelMock(): \Mockery\MockInterface
+    public function getModelMock(): m\MockInterface
     {
         return m::mock(\Illuminate\Database\Eloquent\Model::class);
     }
