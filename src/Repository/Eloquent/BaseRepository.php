@@ -3,6 +3,7 @@
 namespace SevenyMedia\Repository\Eloquent;
 
 use Illuminate\Contracts\Container\Container as ApplicationContract;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Prettus\Repository\Contracts\CriteriaInterface;
@@ -28,7 +29,7 @@ abstract class BaseRepository extends PrettusBaseRepository
         $this->app = $app;
         $this->criteria = $collection;
 
-        if (null !== $model && true === $model instanceof Model) {
+        if (null !== $model && (true === $model instanceof Model || true === $model instanceof Builder)) {
             $this->model = $model;
         }
 

@@ -66,6 +66,19 @@ class BaseRepositoryTest extends TestCase
         }
     }
 
+    public function testConstructorWithBuilder()
+    {
+        $this->assertInstanceOf(RepositoryStub::class, $repository = new RepositoryStub(
+            $this->application,
+            new \Illuminate\Support\Collection(),
+            $builder = m::mock(\Illuminate\Database\Eloquent\Builder::class)
+        ));
+
+        $property = $this->repositoryReflector()->getProperty('model');
+        $property->setAccessible(true);
+        $this->assertSame($builder, $property->getValue($repository));
+    }
+
     public function testInitiateModel()
     {
         $repository = new RepositoryStub(
