@@ -28,7 +28,7 @@ abstract class BaseRepository extends PrettusBaseRepository
         $this->app = $app;
         $this->criteria = $collection;
 
-        if (null !== $model && true === $model instanceof Model) {
+        if (null !== $model && true === \is_object($model)) {
             $this->model = $model;
         }
 
@@ -177,7 +177,9 @@ abstract class BaseRepository extends PrettusBaseRepository
     {
         $this->initiateModel();
 
-        return parent::with($relations);
+        $this->model->with($relations);
+
+        return $this;
     }
 
     public function withCount($relations)
