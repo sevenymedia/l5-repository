@@ -48,9 +48,7 @@ class BaseRepositoryTest extends TestCase
         $reflectionClass = $this->repositoryReflector();
 
         if (null !== $model) {
-            $property = $reflectionClass->getProperty('model');
-            $property->setAccessible(true);
-            $this->assertSame($model, $property->getValue($repository));
+            $this->assertSame($model, $repository->modelProperty());
         }
 
         if (null !== $presenter) {
@@ -74,9 +72,7 @@ class BaseRepositoryTest extends TestCase
             $builder = m::mock(\Illuminate\Database\Eloquent\Builder::class)
         ));
 
-        $property = $this->repositoryReflector()->getProperty('model');
-        $property->setAccessible(true);
-        $this->assertSame($builder, $property->getValue($repository));
+        $this->assertSame($builder, $repository->modelProperty());
     }
 
     public function testInitiateModel()
@@ -91,10 +87,7 @@ class BaseRepositoryTest extends TestCase
         $method->setAccessible(true);
         $method->invokeArgs($repository, []);
 
-        $property = $reflectionClass->getProperty('model');
-        $property->setAccessible(true);
-
-        $this->assertInstanceOf(ModelStub::class, $property->getValue($repository));
+        $this->assertInstanceOf(ModelStub::class, $repository->modelProperty());
     }
 
     public function testInitiateModelDoesNotOverwrite()
@@ -108,11 +101,7 @@ class BaseRepositoryTest extends TestCase
         $model->shouldReceive('withCount')->andReturn($builder = \Illuminate\Database\Eloquent\Builder::class);
         $repository->withCount(null);
 
-        $reflectionClass = $this->repositoryReflector();
-        $property = $reflectionClass->getProperty('model');
-        $property->setAccessible(true);
-
-        $this->assertSame($builder, $property->getValue($repository));
+        $this->assertSame($builder, $repository->modelProperty());
     }
 
     public function testResetModelCreatesNewModel()
@@ -123,11 +112,7 @@ class BaseRepositoryTest extends TestCase
             $model = new ModelStub()
         ))->resetModel();
 
-        $reflectionClass = $this->repositoryReflector();
-        $property = $reflectionClass->getProperty('model');
-        $property->setAccessible(true);
-
-        $this->assertNotSame($model, $property->getValue($repository));
+        $this->assertNotSame($model, $repository->modelProperty());
     }
 
     public function providerTestConstructor(): array
@@ -154,6 +139,11 @@ class ModelStub extends Model
 
 class RepositoryStub extends BaseRepository
 {
+
+    public function modelProperty()
+    {
+        return $this->model;
+    }
 
     public function model()
     {
