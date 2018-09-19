@@ -247,7 +247,15 @@ abstract class BaseRepository extends PrettusBaseRepository
     {
         $this->initiateModel();
 
-        parent::applyConditions($where);
+        foreach ($where as $field => $value) {
+            if (\is_array($value)) {
+                $value[3] = $value[3] ?? 'and';
+                list($field, $condition, $val, $boolean) = $value;
+                $this->model = $this->model->where($field, $condition, $val, $boolean);
+            } else {
+                $this->model = $this->model->where($field, '=', $value);
+            }
+        }
     }
 
 }

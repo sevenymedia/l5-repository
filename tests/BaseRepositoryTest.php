@@ -115,6 +115,36 @@ class BaseRepositoryTest extends TestCase
         $this->assertNotSame($model, $repository->modelProperty());
     }
 
+    /**
+     * @dataProvider providerTestApplyConditionsProcessesWhereBoolean
+     */
+    public function testApplyConditionsProcessesWhereBoolean($argumentBool, string $expectationBool)
+    {
+        $repository = new RepositoryStub(
+            $this->application,
+            new \Illuminate\Support\Collection(),
+            $model = new ModelStub()
+        );
+
+        $model::setConnectionResolver($connectionResolver = m::mock(\Illuminate\Database\ConnectionResolverInterface::class));
+        $connectionResolver->shouldReceive('connection')->andReturn(
+            $connection = m::mock(\Illuminate\Database\ConnectionInterface::class)
+        );
+        $connection->shouldReceive('getQueryGrammar', 'getPostProcessor');
+
+        $reflectionMethod = new \ReflectionMethod($repository, 'applyConditions');
+        $reflectionMethod->setAccessible(true);
+        $reflectionMethod->invokeArgs($repository, [
+            [array_filter([$column = 'foo', $operator = 'LIKE', $value = '%bar%', $argumentBool]),],
+        ]);
+
+        $where = $repository->modelProperty()->getQuery()->wheres[0];
+        $this->assertSame($column, $where['column']);
+        $this->assertSame($operator, $where['operator']);
+        $this->assertSame($value, $where['value']);
+        $this->assertSame($expectationBool, $where['boolean']);
+    }
+
     public function providerTestConstructor(): array
     {
         return [
@@ -122,6 +152,15 @@ class BaseRepositoryTest extends TestCase
             [$this->getModelMock(),],
             [null, 'foo',],
             [null, null, 'foo',],
+        ];
+    }
+
+    public function providerTestApplyConditionsProcessesWhereBoolean(): array
+    {
+        return [
+            [null, 'and',],
+            ['and', 'and',],
+            ['or', 'or',],
         ];
     }
 
