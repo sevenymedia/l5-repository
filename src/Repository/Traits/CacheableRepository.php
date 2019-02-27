@@ -32,7 +32,7 @@ trait CacheableRepository
      */
     public function all($columns = ['*'])
     {
-        if (!$this->allowedCache('all') || $this->isSkippedCache()) {
+        if (false === $this->allowedCache('all') || true === $this->isSkippedCache()) {
             return parent::all($columns);
         }
 
@@ -58,7 +58,7 @@ trait CacheableRepository
      */
     public function paginate($limit = null, $columns = ['*'], $method = 'paginate')
     {
-        if (!$this->allowedCache('paginate') || $this->isSkippedCache()) {
+        if (false === $this->allowedCache('paginate') || true === $this->isSkippedCache()) {
             return parent::paginate($limit, $columns, $method);
         }
 
@@ -83,7 +83,7 @@ trait CacheableRepository
      */
     public function find($id, $columns = ['*'])
     {
-        if (!$this->allowedCache('find') || $this->isSkippedCache()) {
+        if (false === $this->allowedCache('find') || true === $this->isSkippedCache()) {
             return parent::find($id, $columns);
         }
 
@@ -109,7 +109,7 @@ trait CacheableRepository
      */
     public function findByField($field, $value = null, $columns = ['*'])
     {
-        if (!$this->allowedCache('findByField') || $this->isSkippedCache()) {
+        if (false === $this->allowedCache('findByField') || true === $this->isSkippedCache()) {
             return parent::findByField($field, $value, $columns);
         }
 
@@ -134,7 +134,7 @@ trait CacheableRepository
      */
     public function findWhere(array $where, $columns = ['*'])
     {
-        if (!$this->allowedCache('findWhere') || $this->isSkippedCache()) {
+        if (false === $this->allowedCache('findWhere') || true === $this->isSkippedCache()) {
             return parent::findWhere($where, $columns);
         }
 
@@ -158,7 +158,7 @@ trait CacheableRepository
      */
     public function getByCriteria(CriteriaInterface $criteria)
     {
-        if (!$this->allowedCache('getByCriteria') || $this->isSkippedCache()) {
+        if (false === $this->allowedCache('getByCriteria') || true === $this->isSkippedCache()) {
             return parent::getByCriteria($criteria);
         }
 
