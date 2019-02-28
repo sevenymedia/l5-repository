@@ -2,7 +2,10 @@
 
 namespace SevenyMedia\Repository\Traits;
 
-use Prettus\Repository\Traits\CacheableRepository as BaseCacheableRepository;
+use Prettus\Repository\{
+    Contracts\CriteriaInterface,
+    Traits\CacheableRepository as BaseCacheableRepository
+};
 
 /**
  * Class CacheableRepository
