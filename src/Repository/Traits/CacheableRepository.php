@@ -28,7 +28,7 @@ trait CacheableRepository
      */
     public function getCacheSeconds(): float
     {
-        return $this->getCacheMinutes() / 60;
+        return $this->getCacheMinutes() * 60;
     }
 
     /**
