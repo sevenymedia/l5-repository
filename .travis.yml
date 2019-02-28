@@ -15,7 +15,7 @@ language: php
 matrix:
   allow_failures:
     - php: 7.3
-    - php: nightly
+#    - php: nightly
   fast_finish: true
   include:
 #    - php: 5.4
@@ -26,7 +26,7 @@ matrix:
     - php: 7.1
     - php: 7.2
     - php: 7.3
-    - php: nightly
+#    - php: nightly
 #    - os: osx
 #      osx_image: xcode7.2
 
