@@ -129,6 +129,7 @@ class BaseRepositoryTest extends TestCase
                 $mock->shouldReceive('connection')->andReturn(
                     m::mock(\Illuminate\Database\ConnectionInterface::class, function(\Illuminate\Database\ConnectionInterface $mock) {
                         $mock->shouldReceive('getQueryGrammar', 'getPostProcessor');
+                        $mock->shouldReceive('query')->andReturn(new \Illuminate\Database\Query\Builder($mock));
                     })
                 );
             })
