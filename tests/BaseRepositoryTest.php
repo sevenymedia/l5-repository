@@ -52,14 +52,12 @@ class BaseRepositoryTest extends TestCase
         }
 
         if (null !== $presenter) {
-            $property = $reflectionClass->getProperty('presenter');
-            $property->setAccessible(true);
+            ($property = $reflectionClass->getProperty('presenter'))->setAccessible(true);
             $this->assertSame($presenter, $property->getValue($repository));
         }
 
         if (null !== $validator) {
-            $property = $reflectionClass->getProperty('validator');
-            $property->setAccessible(true);
+            ($property = $reflectionClass->getProperty('validator'))->setAccessible(true);
             $this->assertSame($validator, $property->getValue($repository));
         }
     }
@@ -83,8 +81,7 @@ class BaseRepositoryTest extends TestCase
         );
 
         $reflectionClass = $this->repositoryReflector();
-        $method = $reflectionClass->getMethod('initiateModel');
-        $method->setAccessible(true);
+        ($method = $reflectionClass->getMethod('initiateModel'))->setAccessible(true);
         $method->invokeArgs($repository, []);
 
         $this->assertInstanceOf(ModelStub::class, $repository->modelProperty());
@@ -126,14 +123,19 @@ class BaseRepositoryTest extends TestCase
             $model = new ModelStub()
         );
 
-        $model::setConnectionResolver($connectionResolver = m::mock(\Illuminate\Database\ConnectionResolverInterface::class));
-        $connectionResolver->shouldReceive('connection')->andReturn(
-            $connection = m::mock(\Illuminate\Database\ConnectionInterface::class)
+        $model::setConnectionResolver(m::mock(
+            \Illuminate\Database\ConnectionResolverInterface::class,
+            function(\Illuminate\Database\ConnectionResolverInterface $mock) {
+                $mock->shouldReceive('connection')->andReturn(
+                    m::mock(\Illuminate\Database\ConnectionInterface::class, function(\Illuminate\Database\ConnectionInterface $mock) {
+                        $mock->shouldReceive('getQueryGrammar', 'getPostProcessor');
+                        $mock->shouldReceive('query')->andReturn(new \Illuminate\Database\Query\Builder($mock));
+                    })
+                );
+            })
         );
-        $connection->shouldReceive('getQueryGrammar', 'getPostProcessor');
 
-        $reflectionMethod = new \ReflectionMethod($repository, 'applyConditions');
-        $reflectionMethod->setAccessible(true);
+        ($reflectionMethod = new \ReflectionMethod($repository, 'applyConditions'))->setAccessible(true);
         $reflectionMethod->invokeArgs($repository, [
             [array_filter([$column = 'foo', $operator = 'LIKE', $value = '%bar%', $argumentBool]),],
         ]);
