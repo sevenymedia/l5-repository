@@ -123,11 +123,16 @@ class BaseRepositoryTest extends TestCase
             $model = new ModelStub()
         );
 
-        $model::setConnectionResolver($connectionResolver = m::mock(\Illuminate\Database\ConnectionResolverInterface::class));
-        $connectionResolver->shouldReceive('connection')->andReturn(
-            $connection = m::mock(\Illuminate\Database\ConnectionInterface::class)
+        $model::setConnectionResolver(m::mock(
+            \Illuminate\Database\ConnectionResolverInterface::class,
+            function(\Illuminate\Database\ConnectionResolverInterface $mock) {
+                $mock->shouldReceive('connection')->andReturn(
+                    m::mock(\Illuminate\Database\ConnectionInterface::class, function(\Illuminate\Database\ConnectionInterface $mock) {
+                        $mock->shouldReceive('getQueryGrammar', 'getPostProcessor');
+                    })
+                );
+            })
         );
-        $connection->shouldReceive('getQueryGrammar', 'getPostProcessor');
 
         ($reflectionMethod = new \ReflectionMethod($repository, 'applyConditions'))->setAccessible(true);
         $reflectionMethod->invokeArgs($repository, [
