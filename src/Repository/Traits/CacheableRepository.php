@@ -38,7 +38,7 @@ trait CacheableRepository
      *
      * @return mixed
      */
-    public function all(array $columns = ['*'])
+    public function all($columns = ['*'])
     {
         if (true === $this->useCache(__FUNCTION__)) {
             return parent::all($columns);
@@ -64,7 +64,7 @@ trait CacheableRepository
      *
      * @return mixed
      */
-    public function paginate($limit = null, array $columns = ['*'], string $method = 'paginate')
+    public function paginate($limit = null, $columns = ['*'], $method = 'paginate')
     {
         if (true === $this->useCache(__FUNCTION__)) {
             return parent::paginate($limit, $columns, $method);
@@ -89,7 +89,7 @@ trait CacheableRepository
      *
      * @return mixed
      */
-    public function find(int $id, array $columns = ['*'])
+    public function find($id, $columns = ['*'])
     {
         if (true === $this->useCache(__FUNCTION__)) {
             return parent::find($id, $columns);
@@ -115,7 +115,7 @@ trait CacheableRepository
      *
      * @return mixed
      */
-    public function findByField(string $field, $value = null, array $columns = ['*'])
+    public function findByField($field, $value = null, $columns = ['*'])
     {
         if (true === $this->useCache(__FUNCTION__)) {
             return parent::findByField($field, $value, $columns);
@@ -140,7 +140,7 @@ trait CacheableRepository
      *
      * @return mixed
      */
-    public function findWhere(array $where, array $columns = ['*'])
+    public function findWhere(array $where, $columns = ['*'])
     {
         if (true === $this->useCache(__FUNCTION__)) {
             return parent::findWhere($where, $columns);
