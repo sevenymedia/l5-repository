@@ -18,11 +18,6 @@ matrix:
 #    - php: nightly
   fast_finish: true
   include:
-#    - php: 5.4
-#      env: SETUP=lowest
-#    - php: 5.5
-#      env: SETUP=lowest
-    - php: 7.0
     - php: 7.1
     - php: 7.2
     - php: 7.3
