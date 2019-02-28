@@ -6,7 +6,7 @@ use Prettus\Repository\Traits\CacheableRepository as BaseCacheableRepository;
 
 /**
  * Class CacheableRepository
- * @package Prettus\Repository\Traits
+ * @package SevenyMedia\Repository\Traits
  */
 trait CacheableRepository
 {
