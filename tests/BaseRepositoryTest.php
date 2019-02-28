@@ -52,14 +52,12 @@ class BaseRepositoryTest extends TestCase
         }
 
         if (null !== $presenter) {
-            $property = $reflectionClass->getProperty('presenter');
-            $property->setAccessible(true);
+            ($property = $reflectionClass->getProperty('presenter'))->setAccessible(true);
             $this->assertSame($presenter, $property->getValue($repository));
         }
 
         if (null !== $validator) {
-            $property = $reflectionClass->getProperty('validator');
-            $property->setAccessible(true);
+            ($property = $reflectionClass->getProperty('validator'))->setAccessible(true);
             $this->assertSame($validator, $property->getValue($repository));
         }
     }
@@ -83,8 +81,7 @@ class BaseRepositoryTest extends TestCase
         );
 
         $reflectionClass = $this->repositoryReflector();
-        $method = $reflectionClass->getMethod('initiateModel');
-        $method->setAccessible(true);
+        ($method = $reflectionClass->getMethod('initiateModel'))->setAccessible(true);
         $method->invokeArgs($repository, []);
 
         $this->assertInstanceOf(ModelStub::class, $repository->modelProperty());
@@ -132,8 +129,7 @@ class BaseRepositoryTest extends TestCase
         );
         $connection->shouldReceive('getQueryGrammar', 'getPostProcessor');
 
-        $reflectionMethod = new \ReflectionMethod($repository, 'applyConditions');
-        $reflectionMethod->setAccessible(true);
+        ($reflectionMethod = new \ReflectionMethod($repository, 'applyConditions'))->setAccessible(true);
         $reflectionMethod->invokeArgs($repository, [
             [array_filter([$column = 'foo', $operator = 'LIKE', $value = '%bar%', $argumentBool]),],
         ]);
