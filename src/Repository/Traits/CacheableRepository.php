@@ -21,9 +21,9 @@ trait CacheableRepository
     /**
      * Get cache minutes
      *
-     * @return int
+     * @return float
      */
-    public function getCacheSeconds()
+    public function getCacheSeconds(): float
     {
         return $this->getCacheMinutes() / 60;
     }
@@ -35,7 +35,7 @@ trait CacheableRepository
      *
      * @return mixed
      */
-    public function all($columns = ['*'])
+    public function all(array $columns = ['*'])
     {
         if (true === $this->useCache(__FUNCTION__)) {
             return parent::all($columns);
@@ -43,7 +43,7 @@ trait CacheableRepository
 
         $key = $this->getCacheKey('all', func_get_args());
         $seconds = $this->getCacheSeconds();
-        $value = $this->getCacheRepository()->remember($key, $seconds, function () use ($columns) {
+        $value = $this->getCacheRepository()->remember($key, $seconds, function() use($columns) {
             return parent::all($columns);
         });
 
@@ -61,7 +61,7 @@ trait CacheableRepository
      *
      * @return mixed
      */
-    public function paginate($limit = null, $columns = ['*'], $method = 'paginate')
+    public function paginate($limit = null, array $columns = ['*'], string $method = 'paginate')
     {
         if (true === $this->useCache(__FUNCTION__)) {
             return parent::paginate($limit, $columns, $method);
@@ -69,7 +69,7 @@ trait CacheableRepository
 
         $key = $this->getCacheKey('paginate', func_get_args());
         $seconds = $this->getCacheSeconds();
-        $value = $this->getCacheRepository()->remember($key, $seconds, function () use ($limit, $columns, $method) {
+        $value = $this->getCacheRepository()->remember($key, $seconds, function() use($limit, $columns, $method) {
             return parent::paginate($limit, $columns, $method);
         });
 
@@ -86,7 +86,7 @@ trait CacheableRepository
      *
      * @return mixed
      */
-    public function find($id, $columns = ['*'])
+    public function find(int $id, array $columns = ['*'])
     {
         if (true === $this->useCache(__FUNCTION__)) {
             return parent::find($id, $columns);
@@ -94,7 +94,7 @@ trait CacheableRepository
 
         $key = $this->getCacheKey('find', func_get_args());
         $seconds = $this->getCacheSeconds();
-        $value = $this->getCacheRepository()->remember($key, $seconds, function () use ($id, $columns) {
+        $value = $this->getCacheRepository()->remember($key, $seconds, function() use($id, $columns) {
             return parent::find($id, $columns);
         });
 
@@ -112,7 +112,7 @@ trait CacheableRepository
      *
      * @return mixed
      */
-    public function findByField($field, $value = null, $columns = ['*'])
+    public function findByField(string $field, $value = null, array $columns = ['*'])
     {
         if (true === $this->useCache(__FUNCTION__)) {
             return parent::findByField($field, $value, $columns);
@@ -120,7 +120,7 @@ trait CacheableRepository
 
         $key = $this->getCacheKey('findByField', func_get_args());
         $seconds = $this->getCacheSeconds();
-        $value = $this->getCacheRepository()->remember($key, $seconds, function () use ($field, $value, $columns) {
+        $value = $this->getCacheRepository()->remember($key, $seconds, function() use($field, $value, $columns) {
             return parent::findByField($field, $value, $columns);
         });
 
@@ -137,7 +137,7 @@ trait CacheableRepository
      *
      * @return mixed
      */
-    public function findWhere(array $where, $columns = ['*'])
+    public function findWhere(array $where, array $columns = ['*'])
     {
         if (true === $this->useCache(__FUNCTION__)) {
             return parent::findWhere($where, $columns);
@@ -145,7 +145,7 @@ trait CacheableRepository
 
         $key = $this->getCacheKey('findWhere', func_get_args());
         $seconds = $this->getCacheSeconds();
-        $value = $this->getCacheRepository()->remember($key, $seconds, function () use ($where, $columns) {
+        $value = $this->getCacheRepository()->remember($key, $seconds, function() use($where, $columns) {
             return parent::findWhere($where, $columns);
         });
 
@@ -169,7 +169,7 @@ trait CacheableRepository
 
         $key = $this->getCacheKey('getByCriteria', func_get_args());
         $seconds = $this->getCacheSeconds();
-        $value = $this->getCacheRepository()->remember($key, $seconds, function () use ($criteria) {
+        $value = $this->getCacheRepository()->remember($key, $seconds, function() use($criteria) {
             return parent::getByCriteria($criteria);
         });
 
