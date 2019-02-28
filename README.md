@@ -2,6 +2,8 @@
 
 Laravel 5 Repositories is used to abstract the data layer, making our application more flexible to maintain. The difference between andersao/l5-repository is: this one makes a repository testable.
 
+### For Laravel < 5.8, please use the [1.2 branch](https://github.com/sevenymedia/l5-repository/tree/1.2)!
+
 [![Latest Stable](https://poser.pugx.org/sevenymedia/l5-repository/v/stable)](https://packagist.org/packages/sevenymedia/l5-repository)
 [![Total Downloads](https://poser.pugx.org/sevenymedia/l5-repository/downloads)](https://packagist.org/packages/sevenymedia/l5-repository)
 [![Latest Unstable](https://poser.pugx.org/sevenymedia/l5-repository/v/unstable)](https://packagist.org/packages/sevenymedia/l5-repository)
